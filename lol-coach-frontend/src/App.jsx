@@ -17,11 +17,17 @@ import {
   Menu,
   X,
   CreditCard,
-  Smartphone
+  Smartphone,
+  Download,
+  Bot
 } from 'lucide-react'
 import './App.css'
 
 function App() {
+  // Configurações do Bot Discord e Cliente Local
+  const DISCORD_BOT_INVITE_URL = 'https://discord.com/api/oauth2/authorize?client_id=1424883890505384069&permissions=37014608&scope=bot%20applications.commands'
+  const CLIENT_DOWNLOAD_URL = 'https://github.com/yurifernandorodrigues/procoachvirtual/releases/latest/download/ProCoachVirtual-Setup.exe'
+
   const [currentPage, setCurrentPage] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -525,6 +531,146 @@ function App() {
     </div>
   )
 
+  // Página de Dashboard
+  const DashboardPage = () => (
+    <div className="min-h-screen bg-slate-950 pt-32 pb-20 px-4">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-white mb-8">Dashboard</h1>
+        
+        {/* Cards de Ação */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Card: Convidar Bot */}
+          <Card className="bg-slate-800/50 border-slate-700 hover:border-blue-500/50 transition-all">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2">
+                <Bot className="w-6 h-6" />
+                Convidar Bot para Discord
+              </CardTitle>
+              <CardDescription className="text-slate-400">
+                Adicione o Pro Coach Virtual ao seu servidor Discord
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-slate-300 mb-4">
+                Clique no botão abaixo para convidar o bot. Você precisará ter permissões de administrador no servidor Discord.
+              </p>
+              <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                <p className="text-xs text-slate-400 mb-1">Permissões incluídas:</p>
+                <p className="text-xs text-slate-300">Ler/Enviar mensagens, Conectar/Falar em voz, Gerenciar canais</p>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button 
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                onClick={() => window.open(DISCORD_BOT_INVITE_URL, '_blank')}
+              >
+                Convidar Bot
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </CardFooter>
+          </Card>
+
+          {/* Card: Baixar Cliente */}
+          <Card className="bg-slate-800/50 border-slate-700 hover:border-purple-500/50 transition-all">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2">
+                <Download className="w-6 h-6" />
+                Baixar Cliente Local
+              </CardTitle>
+              <CardDescription className="text-slate-400">
+                Instale o cliente para capturar dados das partidas
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-slate-300 mb-4">
+                O cliente local roda em segundo plano e envia dados das partidas para o bot em tempo real.
+              </p>
+              <div className="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                <p className="text-xs text-slate-400 mb-1">Requisitos:</p>
+                <p className="text-xs text-slate-300">Windows 10/11, League of Legends instalado</p>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button 
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                onClick={() => window.open(CLIENT_DOWNLOAD_URL, '_blank')}
+              >
+                Baixar Cliente
+                <Download className="ml-2 w-5 h-5" />
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+
+        {/* Informações do Usuário */}
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader>
+            <CardTitle className="text-white">Informações da Conta</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <Label className="text-slate-400 text-sm">Nome de Usuário</Label>
+                <p className="text-white text-lg font-semibold mt-1">{user?.username || 'Não disponível'}</p>
+              </div>
+              <div>
+                <Label className="text-slate-400 text-sm">Email</Label>
+                <p className="text-white text-lg font-semibold mt-1">{user?.email || 'Não disponível'}</p>
+              </div>
+              <div>
+                <Label className="text-slate-400 text-sm">Status da Assinatura</Label>
+                <div className="mt-1">
+                  <Badge className="bg-green-600 text-white">
+                    <CheckCircle2 className="w-4 h-4 mr-1" />
+                    Ativa
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Instruções de Uso */}
+        <Card className="bg-slate-800/50 border-slate-700 mt-8">
+          <CardHeader>
+            <CardTitle className="text-white">Como Usar</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                  1
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Convide o Bot</h3>
+                  <p className="text-slate-400 text-sm">Adicione o Pro Coach Virtual ao seu servidor Discord usando o botão acima.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                  2
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Baixe o Cliente</h3>
+                  <p className="text-slate-400 text-sm">Instale o cliente local no seu computador. Ele ficará na bandeja do sistema.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold">
+                  3
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Jogue e Aprenda</h3>
+                  <p className="text-slate-400 text-sm">Entre em um canal de voz no Discord e inicie uma partida. O bot fornecerá dicas em tempo real!</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+
   // Renderização condicional de páginas
   const renderPage = () => {
     switch(currentPage) {
@@ -534,6 +680,8 @@ function App() {
         return <PricingPage />
       case 'login':
         return <LoginPage />
+      case 'dashboard':
+        return <DashboardPage />
       default:
         return <HomePage />
     }
