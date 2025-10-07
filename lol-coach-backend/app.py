@@ -741,3 +741,29 @@ def internal_error(e):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
+
+
+
+@app.route("/api/init-db", methods=["GET"])
+def init_db_endpoint():
+    """Endpoint temporário para inicializar o banco de dados."""
+    with app.app_context():
+        db.create_all()
+        # Criar usuário admin se não existir
+        admin = User.query.filter_by(username='yurifrdf').first()
+        if not admin:
+            admin = User(
+                username='yurifrdf',
+                email='admin@lolcoach.com',
+                is_admin=True,
+                is_active=True,
+                email_verified=True,
+                subscription_status='active',
+                subscription_end_date=datetime(2099, 12, 31)
+            )
+            admin.set_password('Isacnoahjade@131312')
+            db.session.add(admin)
+            db.session.commit()
+            print("✅ Conta de administrador criada com sucesso!")
+        return jsonify({"message": "Banco de dados inicializado e admin verificado!"}), 200
+
