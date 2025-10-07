@@ -8,3 +8,6 @@ bcrypt==4.1.2
 
 
 gunicorn
+
+
+psycopg2-binary
