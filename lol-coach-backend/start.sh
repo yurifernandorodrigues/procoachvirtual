@@ -7,7 +7,7 @@ echo "Current working directory (before cd):"
 pwd
 
 # Navegar para o diretório do backend
-cd lol-coach-backend
+# REMOVIDO: cd lol-coach-backend (pois o Root Directory já aponta para cá)
 
 echo "Current working directory (after cd):"
 pwd
@@ -26,4 +26,3 @@ echo "---"
 
 echo "Starting Gunicorn..."
 gunicorn app:app
-
